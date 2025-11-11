@@ -1,5 +1,5 @@
 steps:
-  # Step 1: Set up Terraform
+  # Step 1: Terraform Init
   - name: hashicorp/terraform:1.7.5
     id: init
     entrypoint: "bash"
@@ -7,8 +7,9 @@ steps:
       - "-c"
       - |
         cd envs/prod
-        terraform init -backend-config="bucket=terraform-state-clean-trees" \
-                       -backend-config="prefix=multi-region-prod"
+        terraform init \
+          -backend-config="bucket=terraform-state-clean-trees" \
+          -backend-config="prefix=multi-region-prod"
 
   # Step 2: Terraform Validate
   - name: hashicorp/terraform:1.7.5
@@ -28,9 +29,9 @@ steps:
       - "-c"
       - |
         cd envs/prod
-        terraform plan -out=tfplan
+        terraform plan -var=\"project_id=${_PROJECT_ID}\" -out=tfplan
 
-  # Step 4: Terraform Apply (auto-approve for CI/CD)
+  # Step 4: Terraform Apply
   - name: hashicorp/terraform:1.7.5
     id: apply
     entrypoint: "bash"
@@ -42,12 +43,12 @@ steps:
 
 timeout: "1200s"
 
+# ✅ Custom substitution key fixed
 substitutions:
-  _TF_VAR_project_id: "clean-trees-477813-n2"
+  _PROJECT_ID: "clean-trees-477813-n2"
 
-# Optional: use a Cloud Build Service Account with limited IAM permissions
+# Use your Cloud Build Service Account
 serviceAccount: "cloud-build-user@clean-trees-477813-n2.iam.gserviceaccount.com"
 
-# Store build logs in Cloud Logging
 options:
   logging: CLOUD_LOGGING_ONLY
