@@ -1,0 +1,10 @@
+project_id = "clean-trees-477813-n2"
+name_prefix = "shopsphere"
+region_primary = "us-central1"
+region_secondary = "europe-west1"
+cidr_us = "10.10.0.0/20"
+cidr_eu = "10.20.0.0/20"
+database_version = "POSTGRES_14"
+db_tier = "db-custom-2-7680"
+create_replica = true
+lb_domains = []
