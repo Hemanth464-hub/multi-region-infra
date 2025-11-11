@@ -2,7 +2,7 @@ steps:
   # Step 1: Terraform Init
   - name: hashicorp/terraform:1.7.5
     id: init
-    entrypoint: "bash"
+    entrypoint: "sh"
     args:
       - "-c"
       - |
@@ -14,7 +14,7 @@ steps:
   # Step 2: Terraform Validate
   - name: hashicorp/terraform:1.7.5
     id: validate
-    entrypoint: "bash"
+    entrypoint: "sh"
     args:
       - "-c"
       - |
@@ -24,17 +24,17 @@ steps:
   # Step 3: Terraform Plan
   - name: hashicorp/terraform:1.7.5
     id: plan
-    entrypoint: "bash"
+    entrypoint: "sh"
     args:
       - "-c"
       - |
         cd envs/prod
-        terraform plan -var=\"project_id=${_PROJECT_ID}\" -out=tfplan
+        terraform plan -var="project_id=${_PROJECT_ID}" -out=tfplan
 
   # Step 4: Terraform Apply
   - name: hashicorp/terraform:1.7.5
     id: apply
-    entrypoint: "bash"
+    entrypoint: "sh"
     args:
       - "-c"
       - |
@@ -43,11 +43,9 @@ steps:
 
 timeout: "1200s"
 
-# ✅ Custom substitution key fixed
 substitutions:
   _PROJECT_ID: "clean-trees-477813-n2"
 
-# Use your Cloud Build Service Account
 serviceAccount: "cloud-build-user@clean-trees-477813-n2.iam.gserviceaccount.com"
 
 options:
