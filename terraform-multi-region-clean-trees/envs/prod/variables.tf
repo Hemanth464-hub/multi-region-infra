@@ -1,5 +1,6 @@
 variable "project_id" {
   type = string
+default = "	clean-trees-477813-n2"
 }
 
 variable "name_prefix" {
