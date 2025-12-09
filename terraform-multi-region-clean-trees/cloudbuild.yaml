@@ -46,7 +46,8 @@ timeout: "1200s"
 substitutions:
   _PROJECT_ID: "clean-trees-477813-n2"
 
-serviceAccount: "projects/clean-trees-477813-n2/serviceAccounts/cloud-build-user@clean-trees-477813-n2.iam.gserviceaccount.com"
+serviceAccount: "540440108859@cloudbuild.gserviceaccount.com"
+
 
 options:
   logging: CLOUD_LOGGING_ONLY
