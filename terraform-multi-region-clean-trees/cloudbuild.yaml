@@ -1,5 +1,4 @@
 steps:
-  # Step 1: Terraform Init
   - name: hashicorp/terraform:1.7.5
     id: init
     entrypoint: "sh"
@@ -11,7 +10,6 @@ steps:
           -backend-config="bucket=terraform-state-clean-trees" \
           -backend-config="prefix=multi-region-prod"
 
-  # Step 2: Terraform Validate
   - name: hashicorp/terraform:1.7.5
     id: validate
     entrypoint: "sh"
@@ -21,7 +19,6 @@ steps:
         cd terraform-multi-region-clean-trees/envs/prod
         terraform validate
 
-  # Step 3: Terraform Plan
   - name: hashicorp/terraform:1.7.5
     id: plan
     entrypoint: "sh"
@@ -31,7 +28,6 @@ steps:
         cd terraform-multi-region-clean-trees/envs/prod
         terraform plan -var="project_id=${_PROJECT_ID}" -out=tfplan
 
-  # Step 4: Terraform Apply
   - name: hashicorp/terraform:1.7.5
     id: apply
     entrypoint: "sh"
@@ -41,15 +37,10 @@ steps:
         cd terraform-multi-region-clean-trees/envs/prod
         terraform apply -auto-approve tfplan
 
-# Substitutions for project ID
 substitutions:
   _PROJECT_ID: "clean-trees-477813-n2"
 
-# Use Cloud Build default service account
 serviceAccount: "projects/clean-trees-477813-n2/serviceAccounts/540440108859-compute@developer.gserviceaccount.com"
 
-# Timeout at the root level, not under options
-timeout: "1200s"
-
-# Logging
-logging: CLOUD_LOGGING_ONLY
+options:
+  timeout: "1200s"
