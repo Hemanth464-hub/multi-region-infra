@@ -16,24 +16,6 @@ steps:
     id: validate
     entrypoint: "sh"
     args:
-steps:
-  # Step 1: Terraform Init
-  - name: hashicorp/terraform:1.7.5
-    id: init
-    entrypoint: "sh"
-    args:
-      - "-c"
-      - |
-        cd terraform-multi-region-clean-trees/envs/prod
-        terraform init \
-          -backend-config="bucket=terraform-state-clean-trees" \
-          -backend-config="prefix=multi-region-prod"
-
-  # Step 2: Terraform Validate
-  - name: hashicorp/terraform:1.7.5
-    id: validate
-    entrypoint: "sh"
-    args:
       - "-c"
       - |
         cd terraform-multi-region-clean-trees/envs/prod
