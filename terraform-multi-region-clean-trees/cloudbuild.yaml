@@ -6,7 +6,6 @@ steps:
     args:
       - "-c"
       - |
-        cd envs/prod
         terraform init \
           -backend-config="bucket=terraform-state-clean-trees" \
           -backend-config="prefix=multi-region-prod"
@@ -18,7 +17,6 @@ steps:
     args:
       - "-c"
       - |
-        cd envs/prod
         terraform validate
 
   # Step 3: Terraform Plan
@@ -28,8 +26,9 @@ steps:
     args:
       - "-c"
       - |
-        cd envs/prod
-        terraform plan -var="project_id=${_PROJECT_ID}" -out=tfplan
+        terraform plan \
+          -var="project_id=${_PROJECT_ID}" \
+          -out=tfplan
 
   # Step 4: Terraform Apply
   - name: hashicorp/terraform:1.7.5
@@ -38,7 +37,6 @@ steps:
     args:
       - "-c"
       - |
-        cd envs/prod
         terraform apply -auto-approve tfplan
 
 timeout: "1200s"
