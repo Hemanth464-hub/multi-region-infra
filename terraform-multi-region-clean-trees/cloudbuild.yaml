@@ -1,5 +1,3 @@
-# terraform-multi-region-clean-trees/cloudbuild.yaml
-
 steps:
   # Step 1: Terraform Init
   - name: hashicorp/terraform:1.7.5
@@ -50,6 +48,8 @@ substitutions:
 # Use Cloud Build default service account
 serviceAccount: "projects/clean-trees-477813-n2/serviceAccounts/540440108859-compute@developer.gserviceaccount.com"
 
-options:
-  logging: CLOUD_LOGGING_ONLY
-  timeout: "1200s"
+# Timeout at the root level, not under options
+timeout: "1200s"
+
+# Logging
+logging: CLOUD_LOGGING_ONLY
