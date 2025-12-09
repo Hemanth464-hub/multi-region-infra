@@ -1,41 +1,45 @@
 steps:
+  # Step 1: Terraform Init
   - name: hashicorp/terraform:1.7.5
     id: init
-    dir: "multi-region-infra"
-    entrypoint: sh
+    dir: "terraform-multi-region-clean-trees"
+    entrypoint: "sh"
     args:
-      - -c
+      - "-c"
       - |
         terraform init \
           -backend-config="bucket=terraform-state-clean-trees" \
           -backend-config="prefix=multi-region-prod"
 
+  # Step 2: Terraform Validate
   - name: hashicorp/terraform:1.7.5
     id: validate
-    dir: "multi-region-infra"
-    entrypoint: sh
+    dir: "terraform-multi-region-clean-trees"
+    entrypoint: "sh"
     args:
-      - -c
+      - "-c"
       - |
         terraform validate
 
+  # Step 3: Terraform Plan
   - name: hashicorp/terraform:1.7.5
     id: plan
-    dir: "multi-region-infra"
-    entrypoint: sh
+    dir: "terraform-multi-region-clean-trees"
+    entrypoint: "sh"
     args:
-      - -c
+      - "-c"
       - |
         terraform plan \
           -var="project_id=${_PROJECT_ID}" \
           -out=tfplan
 
+  # Step 4: Terraform Apply
   - name: hashicorp/terraform:1.7.5
     id: apply
-    dir: "multi-region-infra"
-    entrypoint: sh
+    dir: "terraform-multi-region-clean-trees"
+    entrypoint: "sh"
     args:
-      - -c
+      - "-c"
       - |
         terraform apply -auto-approve tfplan
 
