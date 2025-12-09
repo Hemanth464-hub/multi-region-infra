@@ -42,5 +42,4 @@ substitutions:
 
 serviceAccount: "projects/clean-trees-477813-n2/serviceAccounts/540440108859-compute@developer.gserviceaccount.com"
 
-options:
-  timeout: "1200s"
+
