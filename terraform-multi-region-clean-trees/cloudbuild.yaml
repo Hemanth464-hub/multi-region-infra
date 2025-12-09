@@ -2,11 +2,11 @@ steps:
   # Step 1: Terraform Init
   - name: hashicorp/terraform:1.7.5
     id: init
-    dir: "terraform-multi-region-clean-trees"
     entrypoint: "sh"
     args:
       - "-c"
       - |
+        cd terraform-multi-region-clean-trees/envs/prod
         terraform init \
           -backend-config="bucket=terraform-state-clean-trees" \
           -backend-config="prefix=multi-region-prod"
@@ -14,21 +14,21 @@ steps:
   # Step 2: Terraform Validate
   - name: hashicorp/terraform:1.7.5
     id: validate
-    dir: "terraform-multi-region-clean-trees"
     entrypoint: "sh"
     args:
       - "-c"
       - |
+        cd terraform-multi-region-clean-trees/envs/prod
         terraform validate
 
   # Step 3: Terraform Plan
   - name: hashicorp/terraform:1.7.5
     id: plan
-    dir: "terraform-multi-region-clean-trees"
     entrypoint: "sh"
     args:
       - "-c"
       - |
+        cd terraform-multi-region-clean-trees/envs/prod
         terraform plan \
           -var="project_id=${_PROJECT_ID}" \
           -out=tfplan
@@ -36,11 +36,11 @@ steps:
   # Step 4: Terraform Apply
   - name: hashicorp/terraform:1.7.5
     id: apply
-    dir: "terraform-multi-region-clean-trees"
     entrypoint: "sh"
     args:
       - "-c"
       - |
+        cd terraform-multi-region-clean-trees/envs/prod
         terraform apply -auto-approve tfplan
 
 timeout: "1200s"
