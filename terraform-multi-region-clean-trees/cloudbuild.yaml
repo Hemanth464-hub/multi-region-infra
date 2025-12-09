@@ -41,5 +41,9 @@ substitutions:
   _PROJECT_ID: "clean-trees-477813-n2"
 
 serviceAccount: "projects/clean-trees-477813-n2/serviceAccounts/540440108859-compute@developer.gserviceaccount.com"
+options:
+  logging: CLOUD_LOGGING_ONLY
+  
+
 
 
