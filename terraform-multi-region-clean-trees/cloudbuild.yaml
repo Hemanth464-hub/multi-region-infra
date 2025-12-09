@@ -1,3 +1,5 @@
+# terraform-multi-region-clean-trees/cloudbuild.yaml
+
 steps:
   # Step 1: Terraform Init
   - name: hashicorp/terraform:1.7.5
@@ -41,14 +43,13 @@ steps:
         cd terraform-multi-region-clean-trees/envs/prod
         terraform apply -auto-approve tfplan
 
-timeout: "1200s"
-
+# Substitutions for project ID
 substitutions:
   _PROJECT_ID: "clean-trees-477813-n2"
 
-serviceAccount: "540440108859@cloudbuild.gserviceaccount.com"
-
+# Use Cloud Build default service account
+serviceAccount: "projects/clean-trees-477813-n2/serviceAccounts/540440108859-compute@developer.gserviceaccount.com"
 
 options:
   logging: CLOUD_LOGGING_ONLY
-
+  timeout: "1200s"
