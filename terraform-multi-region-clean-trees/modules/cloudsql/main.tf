@@ -27,7 +27,7 @@ resource "google_sql_database_instance" "replica" {
   region = var.region_secondary
 
   replica_configuration {
-    master_instance_name = google_sql_database_instance.primary.name
+    failover_target = false
   }
 
   depends_on = [google_sql_database_instance.primary]
